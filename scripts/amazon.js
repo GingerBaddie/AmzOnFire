@@ -78,6 +78,16 @@ document.querySelectorAll('.js-add-to-cart')
               }) ;
                 }
                 
+                let cartQuantity = 0;
+                cart.forEach((item) => {
+                    cartQuantity += item.quantity;
+                });
+
+                let cartCount = document.querySelector('.js-cart-quantity');
+                cartCount.innerHTML = cartQuantity;
+
+                console.log(cartQuantity);
+                
                 console.log(cart);
 });
-        });
+        });       
