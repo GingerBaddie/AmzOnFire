@@ -1,5 +1,6 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
+
 
 let productsHTML = ``;
 products.forEach((product) => {
@@ -55,7 +56,19 @@ products.forEach((product) => {
             </div>`
         });
         
-        
+
+function updateCartQuantity() {
+
+    let cartQuantity = 0;
+                cart.forEach((cartItem) => {
+                    cartQuantity += cartItem.quantity;
+                });
+
+                let cartCount = document.querySelector('.js-cart-quantity');
+                cartCount.innerHTML = cartQuantity;
+
+              
+}
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
@@ -77,41 +90,16 @@ document.querySelectorAll('.js-add-to-cart')
                 clearTimeout(timeout);
             });
 
-
             const selectQuantity = document.querySelector(`.js-quantity-selector-${productId}`);
-            let selectedQuantity = selectQuantity.value; 
+            let selectedQuantity = selectQuantity.value;
 
+            addToCart(productId, selectedQuantity);
+            updateCartQuantity();
 
             
-            let matchingItem;
-            cart.forEach((item) => {
-                if (item.productId === productId) {
-                  matchingItem = item;
-            }
-        });
-
-           if (matchingItem) {
-                    matchingItem.quantity += Number(selectedQuantity);
-                }
-
-                else {
-                     cart.push({
-                productId: productId,
-                quantity: Number(selectedQuantity)
-              }) ;
-                }
+       
                 
-                let cartQuantity = 0;
-                cart.forEach((item) => {
-                    cartQuantity += item.quantity;
-                });
-
-                let cartCount = document.querySelector('.js-cart-quantity');
-                cartCount.innerHTML = cartQuantity;
-
-                console.log(cartQuantity);
                 
-                console.log(cart);
 });
         });     
         
