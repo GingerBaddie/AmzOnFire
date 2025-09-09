@@ -1,6 +1,7 @@
-import { cart ,removeFromCart } from "../data/cart.js";
+import { cart ,removeFromCart, calculateCartQuantity, saveToStorage, updateQuantity } from "../data/cart.js";
 import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+
 
 let cartSummaryHTML = ``; 
 
@@ -39,10 +40,17 @@ cart.forEach((cartItem) => {
             </div>
             <div class="product-quantity">
                 <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">
+                 ${cartItem.quantity}</span>
                 </span>
-                <span class="update-quantity-link link-primary">
+                <span class="update-quantity-link link-primary js-update-link" 
+                data-product-id = "${matchingProduct.id}">
                 Update
+                </span>
+                <input data-product-id = "${matchingProduct.id}" class="quantity-input js-quantity-input-${matchingProduct.id}" >
+                <span class= "save-quantity-link link-primary js-save-link"
+                data-product-id = "${matchingProduct.id}">
+                Save
                 </span>
                 <span class="delete-quantity-link link-primary js-delete-link"
                 data-product-id = "${matchingProduct.id}">
@@ -106,10 +114,72 @@ document.querySelectorAll('.js-delete-link')
         const productId = link.dataset.productId;
         
         removeFromCart(productId);
+        
+        checkoutCount.innerHTML =  `${calculateCartQuantity()} items`;
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
-        console.log(container);
+       
         container.remove();
-
+        
         
     });
 });
+
+const checkoutCount = document.querySelector(".js-checkout-count");
+checkoutCount.innerHTML =  `${calculateCartQuantity()} items`;  
+
+
+document.querySelectorAll(".js-update-link")
+        .forEach((link) => {
+            link.addEventListener('click', () => {
+                const productId = link.dataset.productId;
+                console.log(productId);
+                document.querySelector(`.js-cart-item-container-${productId}`).classList.add("is-editing-quantity");
+
+                
+            })
+        
+    });
+                
+document.querySelectorAll(".js-save-link")
+        .forEach((link) => {
+            link.addEventListener('click',() => {
+                const productId = link.dataset.productId;
+                let newQuantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
+                document.querySelector(`.js-cart-item-container-${productId}`).classList.remove("is-editing-quantity");
+                if(newQuantity > 0 && newQuantity < 1000) {
+                    updateQuantity(productId, newQuantity);
+                checkoutCount.innerHTML = `${calculateCartQuantity()} items`;
+                document.querySelector(`.js-quantity-label-${productId}`).innerHTML = newQuantity;                    
+                }
+                
+                else {
+                    alert("☠️☠️ Invalid Quantity! ☠️☠️");
+                }
+                
+            })
+        }); 
+        
+        
+document.querySelectorAll(".quantity-input")
+    .forEach((link) => {
+        link.addEventListener("keydown", (event) => {
+            const productId =  link.dataset.productId;
+            if(event.key === "Enter") {
+            let newQuantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
+            console.log(newQuantity);
+            document.querySelector(`.js-cart-item-container-${productId}`).classList.remove("is-editing-quantity");
+
+
+            if(newQuantity > 0 && newQuantity < 1000) {
+                updateQuantity(productId, newQuantity);
+            checkoutCount.innerHTML = `${calculateCartQuantity()} items`;
+            document.querySelector(`.js-quantity-label-${productId}`).innerHTML = newQuantity;                    
+            }
+
+            else {
+                alert("☠️☠️ Invalid Quantity! ☠️☠️");
+            }
+                
+            }
+        });
+    });        
