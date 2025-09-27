@@ -48,8 +48,8 @@ export function renderPaymentSummary() {
           </div>
 
           <div class="payment-summary-row">
-            <div>Items : ${ItemCount}</div>
-            <div class="payment-summary-money"></div>
+            <div>Items (${ItemCount}): </div>
+            <div class="payment-summary-money">${formatCurrency(amount)}</div>
           </div>
 
           <div class="payment-summary-row">
@@ -59,7 +59,7 @@ export function renderPaymentSummary() {
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
-            <div class="payment-summary-money">$${formatCurrency(amount)}</div>
+            <div class="payment-summary-money">$${formatCurrency(amount + shippingPrice)}</div>
           </div>
 
           <div class="payment-summary-row">
