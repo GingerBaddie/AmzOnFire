@@ -13,7 +13,7 @@ export function renderPaymentSummary() {
     
     let calculatedTax = 0;
     cart.forEach( (cartItem) => {
-        console.log("Cart item:", cartItem);
+        
         let currentItemId;
         let currentItemDeliveryId;
         currentItemId = cartItem.productId;
@@ -23,7 +23,7 @@ export function renderPaymentSummary() {
         products.forEach((product) => {
            if(product.id === currentItemId) {
             amount += ((product.priceCents) * cartItem.quantity);
-            console.log("Running amount in cents:", amount);
+            
             
         }
         
@@ -49,7 +49,7 @@ export function renderPaymentSummary() {
 
           <div class="payment-summary-row">
             <div>Items (${ItemCount}): </div>
-            <div class="payment-summary-money">${formatCurrency(amount)}</div>
+            <div class="payment-summary-money">$${formatCurrency(amount)}</div>
           </div>
 
           <div class="payment-summary-row">
