@@ -1,3 +1,4 @@
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -691,3 +692,27 @@ export const products = [
   }
 
 ];
+
+*/
+
+export let products = [];
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    products = JSON.parse(xhr.response);
+    console.log('products Loaded');
+    fun();
+    
+    
+  });
+
+  xhr.open('GET','https://supersimplebackend.dev/products');
+  xhr.send();
+
+
+} 
+
+
+
