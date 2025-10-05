@@ -15,7 +15,7 @@ async function loadPage() {
         resolve('value 3');
     });
 });
-
+ 
     renderOrderSummary();
     renderPaymentSummary();
     renderCheckoutHeader();
