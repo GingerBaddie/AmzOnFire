@@ -12,7 +12,7 @@ export function renderPaymentSummary() {
     let shippingPrice = 0;
     
     let calculatedTax = 0;
-    cart.forEach( (cartItem) => {
+    cart.forEach((cartItem) => {
         
         let currentItemId;
         let currentItemDeliveryId;
@@ -97,8 +97,7 @@ export function renderPaymentSummary() {
       });
 
       const order = await response.json();
-      
-      
+         
       addOrder(order);
     
       

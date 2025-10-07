@@ -5,12 +5,12 @@ import { formatCurrency } from "./utils/money.js";
 import { products } from "../data/products.js";
 import { loadProductsFetch } from "../data/products.js";
 import { addToCart } from "../data/cart.js";
-import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
 
 
 document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
 loadProductsFetch().then(()=> {
+
   renderOrder();
 })
 

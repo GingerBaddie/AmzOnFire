@@ -12,4 +12,5 @@ function saveToStorage() {
 }
 
 
-console.log(orders);
+
+

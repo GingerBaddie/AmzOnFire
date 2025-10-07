@@ -45,6 +45,8 @@
 
 .current-status {
   color: rgb(6, 125, 98);
+  font-weight: bold;
+
 }
 
 @media (max-width: 575px) {
@@ -77,5 +79,6 @@
   height: 100%;
   background-color: green;
   border-radius: 50px;
-  width: 50%;
+  width: 0%;              /* start from 0 */
+  transition: width 1s ease-in-out;
 }
